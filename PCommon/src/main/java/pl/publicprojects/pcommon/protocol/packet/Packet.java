@@ -1,6 +1,6 @@
-package pl.publicprojects.pnettyserver.protocol.packet;
+package pl.publicprojects.pcommon.protocol.packet;
 
-import pl.publicprojects.pnettyserver.protocol.PanelBuffer;
+import pl.publicprojects.pcommon.protocol.PanelBuffer;
 
 public abstract class Packet implements Cloneable {
     public abstract int getId();

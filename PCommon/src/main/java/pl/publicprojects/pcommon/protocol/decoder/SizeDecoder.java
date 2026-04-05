@@ -1,12 +1,11 @@
-package pl.publicprojects.pnettyserver.protocol.decoder;
+package pl.publicprojects.pcommon.protocol.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import pl.publicprojects.pnettyserver.protocol.PanelBuffer;
-import pl.publicprojects.pnettyserver.protocol.packet.PacketUtil;
+import pl.publicprojects.pcommon.protocol.PanelBuffer;
 
 import java.util.List;
 

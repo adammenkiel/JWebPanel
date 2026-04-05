@@ -1,7 +1,7 @@
-package pl.publicprojects.pnettyserver.protocol.packet.packets.serverbound;
+package pl.publicprojects.pcommon.protocol.packet.packets.serverbound;
 
-import pl.publicprojects.pnettyserver.protocol.PanelBuffer;
-import pl.publicprojects.pnettyserver.protocol.packet.Packet;
+import pl.publicprojects.pcommon.protocol.PanelBuffer;
+import pl.publicprojects.pcommon.protocol.packet.Packet;
 
 public class JoinPacket extends Packet {
     @Override

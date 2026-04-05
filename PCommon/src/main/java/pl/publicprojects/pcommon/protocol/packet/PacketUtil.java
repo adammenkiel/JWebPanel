@@ -1,4 +1,4 @@
-package pl.publicprojects.pnettyserver.protocol.packet;
+package pl.publicprojects.pcommon.protocol.packet;
 
 import lombok.Getter;
 

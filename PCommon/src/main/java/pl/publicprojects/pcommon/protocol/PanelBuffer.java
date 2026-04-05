@@ -1,9 +1,8 @@
-package pl.publicprojects.pnettyserver.protocol;
+package pl.publicprojects.pcommon.protocol;
 
 import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 
-@Getter
 public record PanelBuffer(ByteBuf byteBuf) {
 
     public String readString() {
