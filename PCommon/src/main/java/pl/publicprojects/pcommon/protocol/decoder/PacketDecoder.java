@@ -9,17 +9,24 @@ import pl.publicprojects.pcommon.protocol.packet.Packet;
 
 public class PacketDecoder extends SimpleChannelInboundHandler<PanelBuffer> {
 
-    private final PacketUtil packetUtil;
     private final AbstractConnection abstractConnection;
+    private final PacketUtil packetUtil;
 
-    public PacketDecoder(AbstractConnection connection) {
-        this.packetUtil = connection.getPacketUtil();
+    public PacketDecoder(PacketUtil packetUtil, AbstractConnection connection) {
+        this.packetUtil = packetUtil;
         this.abstractConnection = connection;
     }
 
     @Override
+    public void channelActive(ChannelHandlerContext channelHandlerContext) {
+        abstractConnection.loginConnection(channelHandlerContext);
+    }
+    @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, PanelBuffer panelBuffer) throws Exception {
         int packetId = panelBuffer.byteBuf().readInt();
+        if(packetUtil.getPacketById(packetId) == null)
+            channelHandlerContext.disconnect();
+
         Packet packet = packetUtil.getPacketById(packetId);
         packet.read(panelBuffer);
         this.abstractConnection.handle(packet);

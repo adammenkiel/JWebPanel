@@ -13,16 +13,17 @@ import pl.publicprojects.pcommon.protocol.decoder.PacketDecoder;
 import pl.publicprojects.pcommon.protocol.decoder.SizeDecoder;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
 import pl.publicprojects.pcommon.protocol.packet.PacketUtil;
+import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.JoinPacket;
+import pl.publicprojects.pnettyserver.session.Session;
 
 @Getter
-public class NettyServer extends AbstractConnection {
+public class NettyServer {
 
     private final PacketUtil packetUtil;
-    private final AbstractConnection abstractConnection;
 
     public NettyServer() {
         this.packetUtil = new PacketUtil();
-        this.abstractConnection = this;
+        this.packetUtil.registerPacket(new JoinPacket());
     }
 
     private void start() {
@@ -34,23 +35,21 @@ public class NettyServer extends AbstractConnection {
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
+
+                        private final Session session = new Session();
+
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline().addLast(new SizeDecoder());
-                            socketChannel.pipeline().addLast(new PacketDecoder(abstractConnection));
+                            socketChannel.pipeline().addLast(new PacketDecoder(packetUtil, session));
                         }
                     })
                     .bind(9876)
                     .sync();
-
+                    System.out.println("Server started! Port: 9876");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void handle(Packet packet) {
-
     }
 
     public static void main(String[] args) {

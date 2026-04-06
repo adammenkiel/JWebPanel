@@ -9,4 +9,5 @@ public record PanelBuffer(ByteBuf byteBuf) {
         int len = byteBuf.readInt();
         return new String(byteBuf.readBytes(len).array());
     }
+
 }
