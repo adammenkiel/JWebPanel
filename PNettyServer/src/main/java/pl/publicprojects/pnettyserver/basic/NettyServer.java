@@ -13,6 +13,7 @@ import pl.publicprojects.pcommon.protocol.decoder.PacketDecoder;
 import pl.publicprojects.pcommon.protocol.decoder.SizeDecoder;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
 import pl.publicprojects.pcommon.protocol.packet.PacketUtil;
+import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.InfoPackPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.JoinPacket;
 import pl.publicprojects.pnettyserver.session.Session;
 
@@ -23,7 +24,7 @@ public class NettyServer {
 
     public NettyServer() {
         this.packetUtil = new PacketUtil();
-        this.packetUtil.registerPacket(new JoinPacket());
+        this.packetUtil.registerServerPackets();
     }
 
     private void start() {
