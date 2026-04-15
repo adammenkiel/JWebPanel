@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.netty:netty-all:4.1.108.Final")
+    compileOnly("io.netty:netty-all:4.1.108.Final")
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.publicprojects.panelplugin.handler.SimpleSessionHandler;
-import pl.publicprojects.panelplugin.helper.ChatQueue;
+import pl.publicprojects.pcommon.protocol.helper.ChatQueue;
 import pl.publicprojects.panelplugin.listeners.ChatListener;
 import pl.publicprojects.pnettyserver.basic.NettyServer;
 

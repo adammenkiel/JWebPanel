@@ -1,8 +1,10 @@
 package pl.publicprojects.pcommon.protocol.packet.packets.clientbound;
 
+import lombok.Getter;
 import pl.publicprojects.pcommon.protocol.PanelBuffer;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
 
+@Getter
 public class MessagePacket extends Packet {
 
     private String message;

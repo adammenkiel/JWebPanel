@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.publicprojects.javawebpanel.jwt.AuthFilter;
+import pl.publicprojects.pnettyclient.basic.NettyClient;
 
 @Configuration
 @EnableMethodSecurity

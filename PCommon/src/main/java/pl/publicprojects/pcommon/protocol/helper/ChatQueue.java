@@ -1,4 +1,4 @@
-package pl.publicprojects.panelplugin.helper;
+package pl.publicprojects.pcommon.protocol.helper;
 
 import lombok.Getter;
 

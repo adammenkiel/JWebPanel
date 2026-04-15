@@ -1,7 +1,7 @@
 package pl.publicprojects.panelplugin.handler;
 
 import pl.publicprojects.panelplugin.basic.PPanelPlugin;
-import pl.publicprojects.panelplugin.helper.ChatQueue;
+import pl.publicprojects.pcommon.protocol.helper.ChatQueue;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessageGroupPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.JoinPacket;

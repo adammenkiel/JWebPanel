@@ -1,5 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("java")
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "org.example"
@@ -16,6 +19,14 @@ dependencies {
     implementation(project(":PNettyServer"))
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
+}
+
+tasks.shadowJar {
+    archiveBaseName.set("PPanelPlugin")
+    archiveClassifier.set("")
+    archiveVersion.set("1.0.0")
+
+    mergeServiceFiles()
 }
 
 tasks.test {

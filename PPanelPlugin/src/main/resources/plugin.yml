@@ -1,0 +1,3 @@
+name: PPanelPlugin
+version: 1.0
+main: pl.publicprojects.panelplugin.basic.PPanelPlugin

@@ -5,9 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import pl.publicprojects.panelplugin.basic.PPanelPlugin;
-import pl.publicprojects.panelplugin.helper.ChatQueue;
+import pl.publicprojects.pcommon.protocol.helper.ChatQueue;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessagePacket;
-import pl.publicprojects.pnettyserver.basic.NettyServer;
 import pl.publicprojects.pnettyserver.session.Session;
 
 import java.util.List;

@@ -1,10 +1,12 @@
 package pl.publicprojects.pcommon.protocol.packet.packets.clientbound;
 
+import lombok.Getter;
 import pl.publicprojects.pcommon.protocol.PanelBuffer;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
 
 import java.util.List;
 
+@Getter
 public class MessageGroupPacket extends Packet {
 
     private List<String> messages;

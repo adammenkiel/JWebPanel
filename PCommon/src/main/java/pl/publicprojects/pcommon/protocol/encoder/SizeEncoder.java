@@ -9,9 +9,8 @@ import pl.publicprojects.pcommon.protocol.packet.Packet;
 public class SizeEncoder extends MessageToByteEncoder<ByteBuf> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, ByteBuf packet, ByteBuf byteBuf) throws Exception {
-        byte[] bytes = new byte[packet.readableBytes()];
-        packet.readBytes(bytes);
-        byteBuf.writeInt(bytes.length);
-        byteBuf.writeBytes(bytes);
+        int length = packet.readableBytes();
+        byteBuf.writeInt(length);
+        byteBuf.writeBytes(packet, packet.readerIndex(), length);
     }
 }
