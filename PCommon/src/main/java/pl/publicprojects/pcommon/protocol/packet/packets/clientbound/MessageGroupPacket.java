@@ -1,23 +1,23 @@
-package pl.publicprojects.pcommon.protocol.packet.packets.serverbound;
+package pl.publicprojects.pcommon.protocol.packet.packets.clientbound;
 
 import pl.publicprojects.pcommon.protocol.PanelBuffer;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
 
 import java.util.List;
 
-public class InfoPackPacket extends Packet {
+public class MessageGroupPacket extends Packet {
 
     private List<String> messages;
 
-    public InfoPackPacket() {}
+    public MessageGroupPacket() {}
 
-    public InfoPackPacket(List<String> messages) {
+    public MessageGroupPacket(List<String> messages) {
         this.messages = messages;
     }
 
     @Override
     public int getId() {
-        return 1;
+        return 0;
     }
 
     @Override

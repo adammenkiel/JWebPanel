@@ -1,4 +1,4 @@
-package pl.publicprojects.pcommon.protocol.packet.packets.serverbound;
+package pl.publicprojects.pcommon.protocol.packet.packets.clientbound;
 
 import pl.publicprojects.pcommon.protocol.PanelBuffer;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
@@ -15,7 +15,7 @@ public class MessagePacket extends Packet {
 
     @Override
     public int getId() {
-        return 2;
+        return 1;
     }
 
     @Override
