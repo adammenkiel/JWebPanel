@@ -1,19 +1,16 @@
 package pl.publicprojects.pnettyclient.basic;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.Getter;
 import pl.publicprojects.pcommon.protocol.connection.AbstractConnection;
-import pl.publicprojects.pcommon.protocol.decoder.PacketDecoder;
-import pl.publicprojects.pcommon.protocol.decoder.SizeDecoder;
-import pl.publicprojects.pcommon.protocol.encoder.PacketEncoder;
-import pl.publicprojects.pcommon.protocol.encoder.SizeEncoder;
+import pl.publicprojects.pcommon.protocol.handler.decoder.PacketDecoder;
+import pl.publicprojects.pcommon.protocol.handler.decoder.SizeDecoder;
+import pl.publicprojects.pcommon.protocol.handler.encoder.PacketEncoder;
+import pl.publicprojects.pcommon.protocol.handler.encoder.SizeEncoder;
 import pl.publicprojects.pcommon.protocol.helper.ChatQueue;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
 import pl.publicprojects.pcommon.protocol.packet.PacketUtil;
@@ -27,7 +24,7 @@ public class NettyClient extends AbstractConnection {
     private String host;
     private int port;
     private final PacketUtil packetUtil;
-    private ChannelHandlerContext channelHandlerContext;
+    private Channel channel;
     private final ChatQueue chatQueue;
 
     public NettyClient() {
@@ -74,29 +71,33 @@ public class NettyClient extends AbstractConnection {
     public void handle(Packet packet) {
         if(packet instanceof MessageGroupPacket messageGroupPacket) {
             messageGroupPacket.getMessages().forEach(this.chatQueue::add);
-            System.out.println("Message group received!");
         }
         if(packet instanceof MessagePacket messagePacket) {
+            System.out.println(messagePacket.getMessage());
             this.chatQueue.add(messagePacket.getMessage());
-            System.out.println("Received: " + messagePacket.getMessage());
         }
     }
 
     @Override
     public void loginConnection(Object loginObject) {
-        if(loginObject instanceof ChannelHandlerContext context) {
-            this.channelHandlerContext = context;
+        if(loginObject instanceof Channel channel) {
+            this.channel = channel;
         }
     }
 
     @Override
     public void disconnect() {
-        this.channelHandlerContext.disconnect();
+        this.channel.disconnect();
     }
 
     @Override
     public void sendPacket(Packet packet) {
-        if(this.channelHandlerContext == null) return;
-        this.channelHandlerContext.writeAndFlush(packet);
+        if(this.channel == null) return;
+        this.channel.writeAndFlush(packet).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+    }
+
+    @Override
+    public String getName() {
+        return "NettyClient";
     }
 }

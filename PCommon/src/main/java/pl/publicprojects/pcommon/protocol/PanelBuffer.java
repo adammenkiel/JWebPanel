@@ -13,8 +13,9 @@ import java.util.List;
 public record PanelBuffer(ByteBuf byteBuf) {
 
     public String readString() {
-        int len = byteBuf.readInt();
-        return new String(byteBuf.readBytes(len).array(), StandardCharsets.UTF_8);
+        byte[] bytes = new byte[byteBuf.readInt()];
+        byteBuf.readBytes(bytes);
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 
     public void writeString(String str) {

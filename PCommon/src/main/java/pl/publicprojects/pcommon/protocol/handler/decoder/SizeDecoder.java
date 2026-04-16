@@ -1,4 +1,4 @@
-package pl.publicprojects.pcommon.protocol.decoder;
+package pl.publicprojects.pcommon.protocol.handler.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;

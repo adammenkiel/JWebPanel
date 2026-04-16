@@ -8,10 +8,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.Getter;
-import pl.publicprojects.pcommon.protocol.decoder.PacketDecoder;
-import pl.publicprojects.pcommon.protocol.decoder.SizeDecoder;
-import pl.publicprojects.pcommon.protocol.encoder.PacketEncoder;
-import pl.publicprojects.pcommon.protocol.encoder.SizeEncoder;
+import pl.publicprojects.pcommon.protocol.handler.decoder.PacketDecoder;
+import pl.publicprojects.pcommon.protocol.handler.decoder.SizeDecoder;
+import pl.publicprojects.pcommon.protocol.handler.encoder.PacketEncoder;
+import pl.publicprojects.pcommon.protocol.handler.encoder.SizeEncoder;
 import pl.publicprojects.pcommon.protocol.packet.PacketUtil;
 import pl.publicprojects.pnettyserver.handler.AbstractHandler;
 import pl.publicprojects.pnettyserver.session.Session;
@@ -38,7 +38,7 @@ public class NettyServer {
     public void start() {
         try {
             NettyServer nettyServer = this;
-            EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+            EventLoopGroup bossGroup = new NioEventLoopGroup();
             EventLoopGroup workerGroup = new NioEventLoopGroup();
 
             ServerBootstrap bootstrap = new ServerBootstrap();
@@ -46,10 +46,10 @@ public class NettyServer {
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
-                        private final Session session = new Session(nettyServer);
-
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
+                            Session session = new Session(nettyServer);
+
                             socketChannel.pipeline()
                                     .addLast(new SizeDecoder())
                                     .addLast(new PacketDecoder(packetUtil, session))

@@ -1,4 +1,4 @@
-package pl.publicprojects.pcommon.protocol.decoder;
+package pl.publicprojects.pcommon.protocol.handler.decoder;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -19,10 +19,11 @@ public class PacketDecoder extends SimpleChannelInboundHandler<PanelBuffer> {
 
     @Override
     public void channelActive(ChannelHandlerContext channelHandlerContext) {
-        abstractConnection.loginConnection(channelHandlerContext);
+        abstractConnection.loginConnection(channelHandlerContext.channel());
     }
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, PanelBuffer panelBuffer) throws Exception {
+
         int packetId = panelBuffer.byteBuf().readInt();
 
         if(packetUtil.getPacketById(packetId) == null) {

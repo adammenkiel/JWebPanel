@@ -8,6 +8,9 @@ public class ConnectionTest {
         DataOutputStream stream = new DataOutputStream(s.getOutputStream());
         stream.writeInt(4);
         stream.writeInt(0);
-        while(true) {}
+        while(true) {
+            int val = s.getInputStream().read();
+            System.out.println( val + " (" + (char)val + ")");
+        }
     }
 }

@@ -1,5 +1,7 @@
 package pl.publicprojects.pnettyserver.session;
 
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import pl.publicprojects.pcommon.protocol.connection.AbstractConnection;
@@ -14,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Session extends AbstractConnection {
 
-    private ChannelHandlerContext channelHandlerContext;
+    private Channel channel;
     private final NettyServer nettyServer;
 
     public Session(NettyServer nettyServer) {
@@ -26,19 +28,25 @@ public class Session extends AbstractConnection {
 
     @Override
     public void loginConnection(Object loginObject) {
-        if(loginObject instanceof ChannelHandlerContext context) {
-            this.channelHandlerContext = context;
+        if(loginObject instanceof Channel channel) {
+            this.channel = channel;
         }
     }
 
     @Override
     public void disconnect() {
-        this.channelHandlerContext.disconnect();
+        sessionList.remove(this);
+        this.channel.disconnect();
     }
 
     @Override
     public void sendPacket(Packet packet) {
-        this.channelHandlerContext.writeAndFlush(packet);
+        this.channel.writeAndFlush(packet).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+    }
+
+    @Override
+    public String getName() {
+        return "Session";
     }
 
     @Override

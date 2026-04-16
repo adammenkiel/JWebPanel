@@ -8,4 +8,5 @@ public abstract class AbstractConnection {
     public abstract void loginConnection(Object loginObject);
     public abstract void disconnect();
     public abstract void sendPacket(Packet packet);
+    public abstract String getName();
 }

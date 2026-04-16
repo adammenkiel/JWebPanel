@@ -1,6 +1,7 @@
 package pl.publicprojects.panelplugin.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,13 +28,17 @@ public class ChatListener implements Listener {
     public void onChat(AsyncChatEvent event) {
         Bukkit.getScheduler().runTask(this.plugin, () -> {
             String playerName = event.getPlayer().getName();
-            String message = event.message().toString();
-            String outputMessage = playerName + ": " + message;
+            String rawMessage = PlainTextComponentSerializer.plainText()
+                    .serialize(event.message());
+
+            String outputMessage = playerName + ": " + rawMessage;
 
             this.chatQueue.add(outputMessage);
 
-            for(Session session : this.sessionList)
+            for(Session session : Session.getSessionList()) {
                 session.sendPacket(new MessagePacket(outputMessage));
+            }
+
         });
     }
 }
