@@ -23,16 +23,21 @@ public class PacketDecoder extends SimpleChannelInboundHandler<PanelBuffer> {
     }
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, PanelBuffer panelBuffer) throws Exception {
+        try {
+            int packetId = panelBuffer.byteBuf().readInt();
 
-        int packetId = panelBuffer.byteBuf().readInt();
+            if (packetUtil.getPacketById(packetId) == null) {
+                channelHandlerContext.disconnect();
+                return;
+            }
 
-        if(packetUtil.getPacketById(packetId) == null) {
-            channelHandlerContext.disconnect();
-            return;
+            Packet packet = packetUtil.getPacketById(packetId);
+            packet.read(panelBuffer);
+            if(this.abstractConnection.getChannel().isActive())
+                this.abstractConnection.handle(packet);
+
+        } catch (Exception e) {
+            this.abstractConnection.disconnect();
         }
-
-        Packet packet = packetUtil.getPacketById(packetId);
-        packet.read(panelBuffer);
-        this.abstractConnection.handle(packet);
     }
 }

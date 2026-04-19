@@ -47,7 +47,7 @@ public class NettyServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
                         @Override
-                        protected void initChannel(SocketChannel socketChannel) throws Exception {
+                        protected void initChannel(SocketChannel socketChannel) {
                             Session session = new Session(nettyServer);
 
                             socketChannel.pipeline()
@@ -60,7 +60,7 @@ public class NettyServer {
                     .bind(this.port)
                     .sync();
                     System.out.println("Server started! Port: " + this.port);
-                    started = true;
+                    this.started = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
