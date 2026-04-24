@@ -14,9 +14,9 @@ public class ChatQueue {
         this.chatQueue = new ArrayDeque<>();
     }
 
-    public void add(String message) {
+    public synchronized void add(String message) {
         chatQueue.add(message);
-        if(chatQueue.size() > 20) {
+        while(chatQueue.size() > 20) {
             chatQueue.poll();
         }
     }

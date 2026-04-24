@@ -37,6 +37,7 @@ public class JwtUtil {
     public ResponseCookie generateJwtCookie(SessionInfo sessionInfo) {
         Date date = new Date();
 
+        System.out.println("Generating... " + this.jwtTime);
         String userNameToken = Jwts.builder().setSubject(sessionInfo.getUsername())
                 .setIssuedAt(date)
                 .setExpiration(new Date(date.getTime() + this.jwtTime * 1000))
@@ -61,7 +62,7 @@ public class JwtUtil {
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parserBuilder().setSigningKey(signingKey).build().parseClaimsJws(authToken);
+            Jwts.parserBuilder().setSigningKey(this.signingKey).build().parseClaimsJws(authToken);
             return true;
         } catch (Exception e) {
             return false;
