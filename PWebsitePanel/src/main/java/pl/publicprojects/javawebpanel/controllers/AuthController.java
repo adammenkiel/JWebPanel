@@ -1,5 +1,7 @@
 package pl.publicprojects.javawebpanel.controllers;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.WebUtils;
 import pl.publicprojects.javawebpanel.jwt.JwtUtil;
 import pl.publicprojects.javawebpanel.repositories.RoleRepository;
 import pl.publicprojects.javawebpanel.repositories.SessionRepository;
@@ -22,14 +25,11 @@ import pl.publicprojects.javawebpanel.session.Role;
 import pl.publicprojects.javawebpanel.session.Session;
 import pl.publicprojects.javawebpanel.session.SessionInfo;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
-public class LoginController {
+public class AuthController {
 
     @Autowired
     private SessionRepository sessionRepository;
@@ -92,5 +92,18 @@ public class LoginController {
         sessionRepository.save(session);
         
         return ResponseEntity.ok("ok");
+    }
+
+    @PostMapping("/status")
+    public ResponseEntity<?> authStatus(HttpServletRequest request) {
+        Cookie jwtCookie = WebUtils.getCookie(request, this.jwtUtil.getJwtName());
+        if(jwtCookie == null) {
+            return ResponseEntity.ok("false");
+        }
+        boolean correct = this.jwtUtil.validateJwtToken(jwtCookie.getValue());
+        if(!correct)
+            return ResponseEntity.ok("false");
+
+        return ResponseEntity.ok("true");
     }
 }
