@@ -1,17 +1,20 @@
-
-//import { Link } from "react-router-dom";
-//import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/main-page";
-
+import NavigateBar from "@/components/elem/navigate-bar";
+import Footer from "./components/elem/footer";
+import NotFound from "./pages/not-found";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainPage />}/>
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <div className="bg-gray-100">
+          <NavigateBar />
+          <Routes>
+            <Route path="/" element={<MainPage />}/>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </div>
+      </BrowserRouter>
   );
 }

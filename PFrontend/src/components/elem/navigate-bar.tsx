@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/navigation-menu";
 
 import { Button } from "@/components/ui/button";
-
+//import { Link } from "react-router-dom";
 
 export default function NavigateBar() {
     const logged = localStorage.getItem("logged");

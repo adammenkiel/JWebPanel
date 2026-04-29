@@ -10,10 +10,7 @@ import Footer from "@/components/elem/footer";
     
     const logged = localStorage.getItem("logged");
     return (
-      <div className="bg-gray-100">
-        <NavigateBar />
-        
-        {/*Main page*/}
+      <>
         <main className="mx-[5%]">
             {/*Main description*/}
             <div className="flex flex-col items-center justify-center my-20">
@@ -56,7 +53,6 @@ import Footer from "@/components/elem/footer";
               </Card>
             </div>
         </main>
-        <Footer />
-      </div>
+      </>
     );
   }
