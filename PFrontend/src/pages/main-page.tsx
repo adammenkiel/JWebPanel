@@ -1,7 +1,8 @@
+import { useAuthContext } from "@/components/elem/auth/auth-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardHeader, CardDescription, CardAction, CardContent, CardFooter } from "@/components/ui/card";
-import NavigateBar from "@/components/elem/navigate-bar";
-import Footer from "@/components/elem/footer";
+//import NavigateBar from "@/components/elem/navigate-bar";
+//import Footer from "@/components/elem/footer";
 //import { Link } from "react-router-dom";
 //import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 
@@ -9,6 +10,8 @@ import Footer from "@/components/elem/footer";
   export default function MainPage() {
     
     const logged = localStorage.getItem("logged");
+    const { setView } = useAuthContext();
+
     return (
       <>
         <main className="mx-[5%]">
@@ -22,8 +25,8 @@ import Footer from "@/components/elem/footer";
                 <Button variant="outline" className="mt-5 bg-blue-300">Go to panel</Button>
               ) : (
                 <div className="flex gap-4">
-                  <Button variant="outline" className="mt-5 bg-blue-300">Log in</Button>
-                  <Button variant="outline" className="mt-5 bg-blue-300">Sign in</Button>
+                  <Button onClick={() => setView("login")} variant="outline" className="mt-5 bg-blue-300">Log in</Button>
+                  <Button onClick={() => setView("register")} variant="outline" className="mt-5 bg-blue-300">Sign in</Button>
                 </div>
               )}
             </div>
