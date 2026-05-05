@@ -19,13 +19,13 @@ export default function NavigateBar() {
 	        <NavigationMenu>
 	        	<NavigationMenuList>
 	        		<NavigationMenuItem>
-	        			<NavigationMenuLink>
+	        			<NavigationMenuLink onClick = {() => {window.location.href = "/"}}>
 	        				Main page
 	        			</NavigationMenuLink>
 	        		</NavigationMenuItem>
 	        		{logged && (
                         <NavigationMenuItem>
-	        			    <NavigationMenuLink>
+	        			    <NavigationMenuLink onClick = {() => {window.location.href = "/panel"}}>
 	        				    Panel
 	        			    </NavigationMenuLink>
 	        		    </NavigationMenuItem>
@@ -39,7 +39,14 @@ export default function NavigateBar() {
 	        	    	    <span>Logged as: </span>
 	        	    	    <span className="font-semibold">{localStorage.getItem("username")}</span>
 	        	        </div>
-	        	        <Button variant="destructive">Log out</Button>
+	        	        <Button onClick={
+							() => {
+								localStorage.removeItem("logged");
+								localStorage.removeItem("username");
+								window.location.reload();
+								// I need to do log out fetch in the future
+							}
+						} variant="destructive">Log out</Button>
                     </>
                 ) : (
                     <div className="flex gap-4">

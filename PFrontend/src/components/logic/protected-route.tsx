@@ -12,5 +12,9 @@ export default function ProtectedRoute({children}: ElementProps) {
             <Navigate to="/"/>
         );
     }
-    return ({children});
+    return (
+        <>
+            {children}
+        </>
+    );
 }

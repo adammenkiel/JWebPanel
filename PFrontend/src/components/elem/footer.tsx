@@ -12,16 +12,20 @@ export default function Footer() {
         <footer className = "shadow">
           <div className="flex flex-col mt-4 items-center justify-center bg-blue-300 h-40">
             <div className="flex gap-5 pt-4">
-              <div className="group rounded-full bg-white p-2 hover:scale-105">
+              <div onClick = {() => {window.location.href = "https://www.facebook.com/"}}
+                className="group rounded-full bg-white p-2 hover:scale-105">
                 <SiFacebook className="group-hover:text-blue-600 group-hover:scale-105 transition-colors duration-300"/>
               </div>
-              <div className="group rounded-full bg-white p-2 hover:scale-105">
+              <div onClick = {() => {window.location.href = "https://www.youtube.com/"}}
+                className="group rounded-full bg-white p-2 hover:scale-105">
                 <SiYoutube className="group-hover:text-red-600 group-hover:scale-105 transition-colors duration-300"/>
               </div>
-              <div className="group rounded-full bg-white p-2 hover:scale-105">
+              <div onClick = {() => {window.location.href = "https://www.discord.gg/"}}
+                className="group rounded-full bg-white p-2 hover:scale-105">
                 <SiDiscord className="group-hover:text-blue-600 group-hover:scale-105 transition-colors duration-300"/>
               </div>
-              <div className="group rounded-full bg-white p-2 hover:scale-105">
+              <div onClick = {() => {window.location.href = "https://www.instagram.com/"}}
+                className="group rounded-full bg-white p-2 hover:scale-105">
                 <SiInstagram className="group-hover:text-red-600 group-hover:scale-105 transition-colors duration-300"/>
               </div>
             </div>

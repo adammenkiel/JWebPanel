@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useAuthContext } from "./auth-context";
 
 
 export default function LoginContainer() {
@@ -47,6 +48,8 @@ export default function LoginContainer() {
             console.error(error);
         }
     };
+
+    const { setView } = useAuthContext();
     
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-60">
@@ -54,7 +57,8 @@ export default function LoginContainer() {
                 <CardHeader>
                     <CardTitle>Login to account</CardTitle>
                     <CardDescription>Please type your username and password to log in.</CardDescription>
-                    <CardAction>Register</CardAction>
+                    <CardAction className="hover-text cursor-pointer"
+                        onClick={() => {setView("register")}}>Register</CardAction>
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-col gap-2">
