@@ -7,11 +7,47 @@ import {
     CardContent, 
     CardFooter
 } from "@/components/ui/card";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 
 export default function LoginContainer() {
+
+    type Response = "success" | "wrongpass" | null;
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [response, setResponse] = useState<Response>(null);
+
+    const fetchLogin = async (username: string, password: string) => {
+        try {
+            const authInfo = await fetch("http://localhost:8080/api/auth/login", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "username": username,
+                    "password": password
+                })
+            });
+            if(authInfo.ok) {
+                const data = await authInfo.json();
+                localStorage.setItem("username", data.username);
+                localStorage.setItem("logged", "true");
+                window.location.reload();
+            } else {
+                setResponse("wrongpass");
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-60">
             <Card className="border-2 w-80">
@@ -22,12 +58,17 @@ export default function LoginContainer() {
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-col gap-2">
-                        <Input type="text" placeholder="Username"></Input>
-                        <Input type="password" placeholder="Password"></Input>
+                        <Input type="text" onChange={(event) => {setUsername(event.target.value)}} placeholder="Username"></Input>
+                        <Input type="password" onChange={(event) => {setPassword(event.target.value)}} placeholder="Password"></Input>
                     </div>
+                    {response === "wrongpass" && 
+                        <div className="mt-5 text-red-500">
+                            Your username or password is wrong!
+                        </div>
+                    }
                 </CardContent>
                 <CardFooter>
-                    <Button variant="default" className={"w-full"}>Login</Button>
+                    <Button onClick={() => fetchLogin(username, password)} variant="default" className={"w-full"}>Login</Button>
                 </CardFooter>
             </Card>
         </div>
