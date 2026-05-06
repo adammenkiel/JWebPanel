@@ -1,7 +1,6 @@
 //import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 
 
 export default function Panel() {

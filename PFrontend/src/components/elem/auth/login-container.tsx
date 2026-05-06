@@ -52,8 +52,8 @@ export default function LoginContainer() {
     const { setView } = useAuthContext();
     
     return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-60">
-            <Card className="border-2 w-80">
+        <div onClick={() => setView(null)} className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-60">
+            <Card onClick={(event) => event.stopPropagation()} className="border-2 w-80">
                 <CardHeader>
                     <CardTitle>Login to account</CardTitle>
                     <CardDescription>Please type your username and password to log in.</CardDescription>
