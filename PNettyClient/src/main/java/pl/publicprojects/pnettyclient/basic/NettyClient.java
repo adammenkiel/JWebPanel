@@ -40,6 +40,7 @@ public class NettyClient extends AbstractConnection {
         NettyClient client = this;
         EventLoopGroup group = new NioEventLoopGroup();
 
+
         try {
             Bootstrap bootstrap = new Bootstrap();
 
