@@ -1,10 +1,13 @@
 //import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 
 
 export default function Panel() {
 
+    type ResponseType = "ok" | "err" | null;
+    const [responseType, setResponseType] = useState<ResponseType>(null);
     const [chatElement, setChatElement] = useState<React.ReactNode[]>([]);
 
     const chatFetch = async () : Promise<string[]> => {
@@ -17,11 +20,17 @@ export default function Panel() {
         });
         if(chatLogsResponse.ok) {
             const rawChatLogs: string[] = await chatLogsResponse.json();
+            setResponseType("ok");
             return rawChatLogs;
+        }
+        if(chatLogsResponse.status == 403) {
+            setResponseType("err");
+            localStorage.removeItem("logged");
+            localStorage.removeItem("username");
+            window.location.href = "/";
         }
         return [];
     }
-
     useEffect(() => {
         console.log("Running connection...")
         const load = async () => {
@@ -32,7 +41,7 @@ export default function Panel() {
             }
             
             const panelChatElement = data.map((element, index) => (
-                <div key = {index}>
+                <div className="" key = {index}>
                     {element}
                 </div>
             ));
@@ -40,6 +49,10 @@ export default function Panel() {
         }; 
         load();
     }, []);
+
+    if(responseType !== "ok") {
+        return (<></>);
+    }
 
     return (
         <>
