@@ -1,11 +1,6 @@
 import { useAuthContext } from "@/components/elem/auth/auth-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardHeader, CardDescription, CardAction, CardContent, CardFooter } from "@/components/ui/card";
-//import NavigateBar from "@/components/elem/navigate-bar";
-//import Footer from "@/components/elem/footer";
-//import { Link } from "react-router-dom";
-//import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
-
 
   export default function MainPage() {
     
@@ -22,7 +17,7 @@ import { Card, CardTitle, CardHeader, CardDescription, CardAction, CardContent, 
               <div className="gray-900 text-2xl">allowing everyone to observe informations, chat and so on!</div>
               
               {logged ? (
-                <Button variant="outline" className="mt-5 bg-blue-300">Go to panel</Button>
+                <Button onClick = {() => {window.location.href = "/panel"}} variant="outline" className="mt-5 bg-blue-300">Go to panel</Button>
               ) : (
                 <div className="flex gap-4">
                   <Button onClick={() => setView("login")} variant="outline" className="mt-5 bg-blue-300">Log in</Button>
