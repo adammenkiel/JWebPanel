@@ -6,6 +6,11 @@
 
 This project is a simple panel for observing server chat on a web panel website.
 
+Main page:
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/3103531b-3d19-441e-9984-70fdda285f22" />
+
+Chat log:
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/5a9df09b-7cb9-4034-a5b5-238192358fd2" />
 
 
 ## Build
