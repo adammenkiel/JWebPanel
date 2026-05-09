@@ -1,4 +1,4 @@
-package pl.publicprojects.pcommon.protocol.helper;
+package pl.publicprojects.pcommon.app.helper;
 
 import lombok.Getter;
 

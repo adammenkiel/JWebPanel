@@ -11,12 +11,16 @@ import pl.publicprojects.pcommon.protocol.handler.decoder.PacketDecoder;
 import pl.publicprojects.pcommon.protocol.handler.decoder.SizeDecoder;
 import pl.publicprojects.pcommon.protocol.handler.encoder.PacketEncoder;
 import pl.publicprojects.pcommon.protocol.handler.encoder.SizeEncoder;
-import pl.publicprojects.pcommon.protocol.helper.ChatQueue;
+import pl.publicprojects.pcommon.app.helper.ChatQueue;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
 import pl.publicprojects.pcommon.protocol.packet.PacketUtil;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessageGroupPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessagePacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.JoinPacket;
+import pl.publicprojects.pnettyclient.handler.AbstractHandler;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 public class NettyClient extends AbstractConnection {
@@ -26,6 +30,7 @@ public class NettyClient extends AbstractConnection {
     private final PacketUtil packetUtil;
     private Channel channel;
     private final ChatQueue chatQueue;
+    private final List<AbstractHandler> handlerList = new CopyOnWriteArrayList<>();
 
     public NettyClient() {
         this.packetUtil = new PacketUtil();
@@ -39,7 +44,6 @@ public class NettyClient extends AbstractConnection {
 
         NettyClient client = this;
         EventLoopGroup group = new NioEventLoopGroup();
-
 
         try {
             Bootstrap bootstrap = new Bootstrap();
@@ -70,6 +74,9 @@ public class NettyClient extends AbstractConnection {
 
     @Override
     public void handle(Packet packet) {
+        for(AbstractHandler handler : this.handlerList) {
+            handler.handle(packet);
+        }
         if(packet instanceof MessageGroupPacket messageGroupPacket) {
             messageGroupPacket.getMessages().forEach(this.chatQueue::add);
         }

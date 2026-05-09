@@ -44,9 +44,10 @@ public class JwtUtil {
                 .signWith(this.signingKey, SignatureAlgorithm.HS256)
                 .compact();
 
-        return ResponseCookie.from(this.jwtName, userNameToken).path("/api")
+        return ResponseCookie.from(this.jwtName, userNameToken).path("/")
                 .maxAge(this.jwtTime)
                 .httpOnly(true)
+                .sameSite("Lax")
                 .secure(this.secure)
                 .build();
     }

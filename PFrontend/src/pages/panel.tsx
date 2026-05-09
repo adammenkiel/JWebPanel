@@ -47,6 +47,34 @@ export default function Panel() {
             setChatElement(panelChatElement);
         }; 
         load();
+        let keyNumber = 20;
+        const socket = new WebSocket("ws://localhost:8080/ws");
+
+        socket.onopen = () => {
+          console.log("Connected");
+        };
+
+        socket.onmessage = (event) => {
+          console.log("Received:", event.data);
+          const dataMessage :string = event.data;
+
+          setChatElement(prev =>
+                [...prev,
+                    (
+                        <div className="" key = {keyNumber}>
+                            {dataMessage}
+                        </div>
+                    )
+                ]
+            );
+            setChatElement(prev => prev.slice(1));
+            keyNumber = keyNumber + 1;
+        };
+
+        socket.onclose = () => {
+          console.log("Disconnected");
+        };
+        return () => socket.close();
     }, []);
 
     if(responseType !== "ok") {

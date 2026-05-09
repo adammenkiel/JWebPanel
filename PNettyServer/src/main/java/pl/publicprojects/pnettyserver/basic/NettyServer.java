@@ -19,17 +19,17 @@ import pl.publicprojects.pnettyserver.session.Session;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 public class NettyServer {
 
     private final PacketUtil packetUtil;
     private boolean started = false;
-    private final List<AbstractHandler> handlerList;
+    private final List<AbstractHandler> handlerList = new CopyOnWriteArrayList<>();
     private final int port;
 
     public NettyServer(int port) {
-        this.handlerList = new ArrayList<>();
         this.packetUtil = new PacketUtil();
         this.packetUtil.registerServerPackets();
         this.port = port;
