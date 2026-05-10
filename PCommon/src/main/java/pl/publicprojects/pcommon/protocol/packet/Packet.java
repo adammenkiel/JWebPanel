@@ -4,6 +4,11 @@ import pl.publicprojects.pcommon.protocol.PanelBuffer;
 
 /**
 * Abstract class for packets
+* Packet structure is composed of
+* 1. <code>packet length</code> (total length of bytes table without bytes of size) expressed as integer (4 bytes)
+* 2. <code>packet id</code> (we can be distinct packets by reading id from bytes table) expressed as integer (4 bytes)
+* 3. <code>data of packet</code> expressed as byte table with length of packet length minus 4 bytes of packet id bytes
+* Packets are stored and managed in <code>PacketUtil</code>
 */
 public abstract class Packet implements Cloneable {
 

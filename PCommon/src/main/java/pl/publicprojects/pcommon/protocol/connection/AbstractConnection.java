@@ -7,6 +7,8 @@ import pl.publicprojects.pcommon.protocol.packet.Packet;
 import pl.publicprojects.pcommon.protocol.packet.PacketUtil;
 import pl.publicprojects.pcommon.protocol.packet.state.PacketState;
 
+
+
 @Setter
 @Getter
 public abstract class AbstractConnection {

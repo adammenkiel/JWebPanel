@@ -9,6 +9,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * That class have packet manager role.
+ */
 @Getter
 public class PacketUtil {
 

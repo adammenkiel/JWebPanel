@@ -6,6 +6,11 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import pl.publicprojects.pcommon.protocol.PanelBuffer;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
 
+
+/**
+ * That class writes packet id as 4 bytes and data of packet in <code>Packet#write</code> method.
+ * Later <code>ByteBuf byteBuf</code> arrives into <code>SizeEncoder</code>
+ */
 public class PacketEncoder extends MessageToByteEncoder<Packet> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, Packet packet, ByteBuf byteBuf) throws Exception {
