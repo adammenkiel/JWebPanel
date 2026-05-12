@@ -21,6 +21,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+
+/**
+ * Class that implements server
+ */
 @Getter
 public class NettyServer {
 
@@ -29,12 +33,18 @@ public class NettyServer {
     private final List<AbstractHandler> handlerList = new CopyOnWriteArrayList<>();
     private final int port;
 
+    /**
+     * @param port Port for server bind
+     */
     public NettyServer(int port) {
         this.packetUtil = new PacketUtil();
         this.packetUtil.registerServerPackets();
         this.port = port;
     }
 
+    /**
+     * Function for bind server
+     */
     public void start() {
         try {
             NettyServer nettyServer = this;

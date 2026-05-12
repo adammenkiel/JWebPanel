@@ -22,6 +22,10 @@ import pl.publicprojects.pnettyclient.handler.AbstractHandler;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Main class for client with PCommon protocol
+ * Spring boot uses it for connect to server hosted together with minecraft server by PPanelPlugin
+ */
 @Getter
 public class NettyClient extends AbstractConnection {
 
@@ -38,6 +42,12 @@ public class NettyClient extends AbstractConnection {
         this.chatQueue = new ChatQueue();
     }
 
+    /**
+     * Function for connect with PPanelPlugin server
+     *
+     * @param host Host of server
+     * @param port Port of server
+     */
     public void connect(String host, int port) {
         this.host = host;
         this.port = port;
@@ -72,6 +82,11 @@ public class NettyClient extends AbstractConnection {
         }
     }
 
+    /**
+     * Implementation for packet handling
+     *
+     * @param packet Received packet
+     */
     @Override
     public void handle(Packet packet) {
         for(AbstractHandler handler : this.handlerList) {
@@ -86,6 +101,9 @@ public class NettyClient extends AbstractConnection {
         }
     }
 
+    /**
+     * Function executed while connection
+     */
     @Override
     public void loginConnection(Object loginObject) {
         if(loginObject instanceof Channel channel) {
