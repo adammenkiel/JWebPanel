@@ -1,0 +1,9 @@
+I need to add Logger support if Spring Boot uses another Logger library maybe I will need to use reflections.
+I need to correct security and add exception support
+ChatQueue may require corrections for Thread support. I need to create multi thread and spam test
+Package path order isn't ideal yet.
+I need to add change port support option and connection whitelist between spring server and minecraft server.
+I plan to add frontend.
+README.md require correction - photos, pages, maybe I will create "documentation module". It's important to write about software implementation, specifications etc.
+I will add comments to every method for documentation too.
+WebSocket

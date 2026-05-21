@@ -8,6 +8,9 @@ import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessagePack
 import pl.publicprojects.pnettyclient.basic.NettyClient;
 import pl.publicprojects.pnettyclient.handler.AbstractHandler;
 
+/**
+ * Listens messages from minecraft server sent through minecraft plugin
+ */
 @Getter
 @Component
 public class MessageHandler implements AbstractHandler {
@@ -24,7 +27,7 @@ public class MessageHandler implements AbstractHandler {
     @Override
     public void handle(Packet packet) {
         if(packet instanceof MessagePacket messagePacket) {
-            webSocketSessionHandler.sendMessage(messagePacket.getMessage());
+            this.webSocketSessionHandler.sendMessage(messagePacket.getMessage());
         }
     }
 }
