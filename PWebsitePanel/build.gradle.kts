@@ -30,6 +30,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.6.0")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
+    compileOnly("org.slf4j:slf4j-api:2.0.13")
     implementation(project(":PNettyClient"))
     implementation(project(":PCommon"))
 }
@@ -39,7 +40,7 @@ springBoot {
 }
 
 tasks.bootJar {
-    archiveFileName.set("PPanelPlugin-1.0.0.jar")
+    archiveFileName.set("PWebsitePanel-bootBuild-1.0.0.jar")
 }
 
 tasks.test {

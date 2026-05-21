@@ -64,13 +64,13 @@ public class Session extends AbstractConnection {
         //Maybe I should do separated function for it
         if(packet instanceof JoinPacket) {
             if(this.getPacketState() != PacketState.JOIN) {
-                System.out.println("Something strange happened");
+                this.nettyServer.getPluginLogger().info("Something strange happened");
                 this.disconnect();
                 return;
             }
             sessionList.add(this);
             this.setPacketState(PacketState.CONNECTED);
-            System.out.println("Registered new connection!");
+            this.nettyServer.getPluginLogger().info("Registered new connection!");
         }
     }
 

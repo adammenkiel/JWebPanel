@@ -6,6 +6,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import pl.publicprojects.pcommon.protocol.connection.AbstractConnection;
 import pl.publicprojects.pcommon.protocol.handler.decoder.PacketDecoder;
 import pl.publicprojects.pcommon.protocol.handler.decoder.SizeDecoder;
@@ -26,6 +27,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Main class for client with PCommon protocol
  * Spring boot uses it for connect to server hosted together with minecraft server by PPanelPlugin
  */
+@Slf4j
 @Getter
 public class NettyClient extends AbstractConnection {
 
@@ -96,7 +98,7 @@ public class NettyClient extends AbstractConnection {
             messageGroupPacket.getMessages().forEach(this.chatQueue::add);
         }
         if(packet instanceof MessagePacket messagePacket) {
-            System.out.println(messagePacket.getMessage());
+            log.info("Received message {}", messagePacket.getMessage());
             this.chatQueue.add(messagePacket.getMessage());
         }
     }

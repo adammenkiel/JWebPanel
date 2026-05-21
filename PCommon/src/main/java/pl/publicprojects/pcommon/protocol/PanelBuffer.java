@@ -12,7 +12,6 @@ import java.util.List;
 */
 public record PanelBuffer(ByteBuf byteBuf) {
 
-
     /**
      * Function for read string
      *

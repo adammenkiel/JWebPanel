@@ -19,6 +19,7 @@ dependencies {
     compileOnly("io.netty:netty-all:4.1.108.Final")
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
+    compileOnly("org.apache.logging.log4j:log4j-api:2.23.1")
     implementation(project(":PCommon"))
 }
 

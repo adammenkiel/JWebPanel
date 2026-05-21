@@ -3,6 +3,8 @@ package pl.publicprojects.javawebpanel.controllers;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -27,6 +29,7 @@ import pl.publicprojects.javawebpanel.session.SessionInfo;
 
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -53,7 +56,7 @@ public class AuthController {
 
         ResponseCookie cookie = jwtUtil.generateJwtCookie(sessionInfo);
 
-        System.out.println("Logging in for user: " + sessionInfo.getUsername());
+        log.info("Logging in for user: {}", sessionInfo.getUsername());
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())

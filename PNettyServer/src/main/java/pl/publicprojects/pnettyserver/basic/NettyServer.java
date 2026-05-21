@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Logger;
 
 
 /**
@@ -32,11 +33,13 @@ public class NettyServer {
     private boolean started = false;
     private final List<AbstractHandler> handlerList = new CopyOnWriteArrayList<>();
     private final int port;
+    private final Logger pluginLogger;
 
     /**
      * @param port Port for server bind
      */
-    public NettyServer(int port) {
+    public NettyServer(Logger pluginLogger, int port) {
+        this.pluginLogger = pluginLogger;
         this.packetUtil = new PacketUtil();
         this.packetUtil.registerServerPackets();
         this.port = port;
@@ -69,7 +72,7 @@ public class NettyServer {
                     })
                     .bind(this.port)
                     .sync();
-                    System.out.println("Server started! Port: " + this.port);
+                    this.pluginLogger.info("Server started! Port: " + this.port);
                     this.started = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -82,10 +85,5 @@ public class NettyServer {
 
     public void registerHandlers(AbstractHandler... handlers) {
         Arrays.asList(handlers).forEach(this::registerHandler);
-    }
-
-    public static void main(String[] args) {
-        NettyServer server = new NettyServer(9876);
-        server.start();
     }
 }

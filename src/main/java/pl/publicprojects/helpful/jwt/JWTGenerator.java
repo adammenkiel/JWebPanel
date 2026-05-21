@@ -10,6 +10,6 @@ public class JWTGenerator {
     public static void main(String[] args) {
         SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         String base64Key = Encoders.BASE64.encode(key.getEncoded());
-        System.out.println("Twój klucz: " + base64Key);
+        System.out.println("Yours key: " + base64Key);
     }
 }

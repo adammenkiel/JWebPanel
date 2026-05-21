@@ -6,6 +6,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.util.Date;
 
 @Getter
 @Component
+@Slf4j
 public class JwtUtil {
 
     @Value(value = "${public-projects.web-panel.jwt-key}")
@@ -37,7 +39,7 @@ public class JwtUtil {
     public ResponseCookie generateJwtCookie(SessionInfo sessionInfo) {
         Date date = new Date();
 
-        System.out.println("Generating... " + this.jwtTime);
+        log.info("Generating... {}", this.jwtTime);
         String userNameToken = Jwts.builder().setSubject(sessionInfo.getUsername())
                 .setIssuedAt(date)
                 .setExpiration(new Date(date.getTime() + this.jwtTime * 1000))

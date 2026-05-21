@@ -16,8 +16,9 @@ public class PPanelPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        this.getLogger().info("PPanelPlugin is loading....");
         this.chatQueue = new ChatQueue();
-        this.nettyServer = new NettyServer(9876);
+        this.nettyServer = new NettyServer(this.getLogger(), 9876);
         this.nettyServer.registerHandler(new SimpleSessionHandler(this));
 
         Bukkit.getScheduler().runTaskAsynchronously(
@@ -29,5 +30,6 @@ public class PPanelPlugin extends JavaPlugin {
                 new ChatListener(this),
                 this
         );
+        this.getLogger().info("Loaded!");
     }
 }
