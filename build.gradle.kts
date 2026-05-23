@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("org.springframework.boot") version("3.2.2")
     id("io.spring.dependency-management") version("1.1.4")
+    id("com.github.johnrengelman.shadow") version ("8.1.1")
 }
 
 group = "org.example"
@@ -12,22 +13,24 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation ("io.jsonwebtoken:jjwt-api:0.11.5")
     testRuntimeOnly ("io.jsonwebtoken:jjwt-impl:0.11.5")
     testRuntimeOnly ("io.jsonwebtoken:jjwt-jackson:0.11.5")
-
     implementation ("io.jsonwebtoken:jjwt-api:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
-    implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    runtimeOnly("org.postgresql:postgresql:42.6.0")
-    implementation("org.springframework.boot:spring-boot-starter-security")
+    compileOnly("org.slf4j:slf4j-api:2.0.13")
+
+
+    testCompileOnly("org.projectlombok:lombok:1.18.30")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("io.netty:netty-all:4.1.108.Final")
+    testImplementation(project(":PCommon"))
+    testImplementation(project(":PNettyServer"))
 }
 
 tasks.test {
