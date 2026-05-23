@@ -1,8 +1,10 @@
-package pl.publicprojects.test;
+package pl.publicprojects.test.tests;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import pl.publicprojects.pnettyserver.basic.NettyServer;
 import pl.publicprojects.pnettyserver.session.Session;
+import pl.publicprojects.test.NettyServerManager;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -13,19 +15,13 @@ import java.util.logging.Logger;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
-/**
- * For correct...
- */
 public class ConnectionTest {
-
-    private NettyServer server;
 
     @Test
     public void connectionTest() throws IOException {
+        NettyServerManager.runJustOneTime();
+
         Logger logger = Logger.getLogger("TEST_LOGGER");
-        this.server = new NettyServer(logger, 9876);
-        this.server.start();
 
         logger.info("Trying to connect...");
 
