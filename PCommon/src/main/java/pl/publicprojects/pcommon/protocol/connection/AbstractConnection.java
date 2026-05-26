@@ -35,6 +35,11 @@ public abstract class AbstractConnection {
     public abstract void disconnect();
 
     /**
+     * Disconnect client from server
+     */
+    public abstract void disconnectWithCause(Throwable throwable);
+
+    /**
      * Sending packet to other side, full logic is implemented in <code>PacketEncoder</code> and <code>SizeEncoder</code>
      * @param packet Packet for send
      */

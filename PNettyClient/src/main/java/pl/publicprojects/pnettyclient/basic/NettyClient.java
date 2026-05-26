@@ -8,6 +8,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import pl.publicprojects.pcommon.protocol.connection.AbstractConnection;
+import pl.publicprojects.pcommon.protocol.handler.ExceptionHandler;
 import pl.publicprojects.pcommon.protocol.handler.decoder.PacketDecoder;
 import pl.publicprojects.pcommon.protocol.handler.decoder.SizeDecoder;
 import pl.publicprojects.pcommon.protocol.handler.encoder.PacketEncoder;
@@ -69,7 +70,8 @@ public class NettyClient extends AbstractConnection {
                                     .addLast(new SizeDecoder())
                                     .addLast(new PacketDecoder(packetUtil, client))
                                     .addLast(new SizeEncoder())
-                                    .addLast(new PacketEncoder());
+                                    .addLast(new PacketEncoder())
+                                    .addLast(new ExceptionHandler(client));
                         }
                     });
 
@@ -116,6 +118,12 @@ public class NettyClient extends AbstractConnection {
     @Override
     public void disconnect() {
         this.channel.disconnect();
+    }
+
+    @Override
+    public void disconnectWithCause(Throwable throwable) {
+        this.disconnect();
+        throw new RuntimeException(throwable);
     }
 
     @Override

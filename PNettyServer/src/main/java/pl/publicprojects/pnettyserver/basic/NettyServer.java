@@ -8,6 +8,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.Getter;
+import pl.publicprojects.pcommon.protocol.handler.ExceptionHandler;
 import pl.publicprojects.pcommon.protocol.handler.decoder.PacketDecoder;
 import pl.publicprojects.pcommon.protocol.handler.decoder.SizeDecoder;
 import pl.publicprojects.pcommon.protocol.handler.encoder.PacketEncoder;
@@ -67,13 +68,15 @@ public class NettyServer {
                                     .addLast(new SizeDecoder())
                                     .addLast(new PacketDecoder(packetUtil, session))
                                     .addLast(new SizeEncoder())
-                                    .addLast(new PacketEncoder());
+                                    .addLast(new PacketEncoder())
+                                    .addLast(new ExceptionHandler(session));
                         }
                     })
                     .bind(this.port)
                     .sync();
-                    this.pluginLogger.info("Server started! Port: " + this.port);
                     this.started = true;
+                    this.pluginLogger.info("Server started! Port: " + this.port);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

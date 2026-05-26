@@ -6,6 +6,7 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import pl.publicprojects.pcommon.protocol.connection.AbstractConnection;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
+import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.DisconnectPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.JoinPacket;
 import pl.publicprojects.pcommon.protocol.packet.state.PacketState;
 import pl.publicprojects.pnettyserver.basic.NettyServer;
@@ -14,6 +15,7 @@ import pl.publicprojects.pnettyserver.handler.AbstractHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
 
 public class Session extends AbstractConnection {
 
@@ -38,6 +40,16 @@ public class Session extends AbstractConnection {
     public void disconnect() {
         sessionList.remove(this);
         this.channel.disconnect();
+    }
+
+    @Override
+    public void disconnectWithCause(Throwable throwable) {
+        if(this.channel.isActive()) {
+            this.sendPacket(new DisconnectPacket(throwable.getMessage()));
+        }
+        this.disconnect();
+        this.nettyServer.getPluginLogger().log(Level.WARNING, "Session was disconnected! (Reason: " + throwable.getMessage() + ")");
+        this.nettyServer.getPluginLogger().log(Level.WARNING, "Channel active status: " + this.channel.isActive());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package pl.publicprojects.pcommon.protocol.packet;
 
 import lombok.Getter;
+import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.DisconnectPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessageGroupPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.JoinPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessagePacket;
@@ -52,7 +53,8 @@ public class PacketUtil {
     public void registerClientPackets() {
         this.registerPackets(
                 new MessageGroupPacket(),
-                new MessagePacket()
+                new MessagePacket(),
+                new DisconnectPacket()
         );
     }
     /**
