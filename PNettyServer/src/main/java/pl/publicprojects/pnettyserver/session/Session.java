@@ -68,6 +68,14 @@ public class Session extends AbstractConnection {
     }
 
     @Override
+    public void disconnectWithReason(String reason) {
+        if(this.channel.isActive())
+            this.sendPacket(new DisconnectPacket("Disconnected: " + reason));
+        this.disconnect();
+        this.nettyServer.getPluginLogger().log(Level.WARNING, "Connection lost of one of sessions. Reason: " + reason);
+    }
+
+    @Override
     public void handle(Packet packet) {
         for(AbstractHandler handler : this.nettyServer.getHandlerList()) {
             handler.handle(this, packet);

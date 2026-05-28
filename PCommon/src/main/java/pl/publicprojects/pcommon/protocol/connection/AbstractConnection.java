@@ -53,4 +53,6 @@ public abstract class AbstractConnection {
      * @return Channel object
      */
     public abstract Channel getChannel();
+
+    public abstract void disconnectWithReason(String reason);
 }

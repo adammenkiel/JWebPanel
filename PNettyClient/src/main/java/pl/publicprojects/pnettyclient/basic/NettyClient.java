@@ -5,6 +5,7 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import pl.publicprojects.pcommon.protocol.connection.AbstractConnection;
@@ -16,13 +17,17 @@ import pl.publicprojects.pcommon.protocol.handler.encoder.SizeEncoder;
 import pl.publicprojects.pcommon.app.helper.ChatQueue;
 import pl.publicprojects.pcommon.protocol.packet.Packet;
 import pl.publicprojects.pcommon.protocol.packet.PacketUtil;
+import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.DisconnectPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessageGroupPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessagePacket;
+import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.PingPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.JoinPacket;
+import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.PongPacket;
 import pl.publicprojects.pnettyclient.handler.AbstractHandler;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Main class for client with PCommon protocol
@@ -38,6 +43,7 @@ public class NettyClient extends AbstractConnection {
     private Channel channel;
     private final ChatQueue chatQueue;
     private final List<AbstractHandler> handlerList = new CopyOnWriteArrayList<>();
+    private long ping = 0;
 
     public NettyClient() {
         this.packetUtil = new PacketUtil();
@@ -71,7 +77,8 @@ public class NettyClient extends AbstractConnection {
                                     .addLast(new PacketDecoder(packetUtil, client))
                                     .addLast(new SizeEncoder())
                                     .addLast(new PacketEncoder())
-                                    .addLast(new ExceptionHandler(client));
+                                    .addLast(new ExceptionHandler(client))
+                                    .addLast(new IdleStateHandler(60, 60, 0, TimeUnit.SECONDS));
                         }
                     });
 
@@ -96,12 +103,24 @@ public class NettyClient extends AbstractConnection {
         for(AbstractHandler handler : this.handlerList) {
             handler.handle(packet);
         }
+        if(packet instanceof PingPacket pingPacket) {
+            long difference = System.currentTimeMillis() - pingPacket.getTime();
+            this.sendPacket(new PongPacket(System.currentTimeMillis()));
+            this.ping = difference;
+            log.info("Ping: {}", this.ping);
+        }
+
         if(packet instanceof MessageGroupPacket messageGroupPacket) {
             messageGroupPacket.getMessages().forEach(this.chatQueue::add);
         }
+
         if(packet instanceof MessagePacket messagePacket) {
             log.info("Received message {}", messagePacket.getMessage());
             this.chatQueue.add(messagePacket.getMessage());
+        }
+        if(packet instanceof DisconnectPacket disconnectPacket) {
+            log.info("Session disconnected! | Reason: {}", disconnectPacket.getMessage());
+            this.disconnect();
         }
     }
 
@@ -135,5 +154,11 @@ public class NettyClient extends AbstractConnection {
     @Override
     public String getName() {
         return "NettyClient";
+    }
+
+    @Override
+    public void disconnectWithReason(String reason) {
+        log.info("Disconnected: {}", reason);
+        this.disconnect();
     }
 }

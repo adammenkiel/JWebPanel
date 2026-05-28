@@ -3,8 +3,10 @@ package pl.publicprojects.pcommon.protocol.packet;
 import lombok.Getter;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.DisconnectPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessageGroupPacket;
+import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.PingPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.JoinPacket;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessagePacket;
+import pl.publicprojects.pcommon.protocol.packet.packets.serverbound.PongPacket;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -54,7 +56,8 @@ public class PacketUtil {
         this.registerPackets(
                 new MessageGroupPacket(),
                 new MessagePacket(),
-                new DisconnectPacket()
+                new DisconnectPacket(),
+                new PingPacket()
         );
     }
     /**
@@ -62,7 +65,8 @@ public class PacketUtil {
      */
     public void registerServerPackets() {
         this.registerPackets(
-                new JoinPacket()
+                new JoinPacket(),
+                new PongPacket()
         );
     }
 }

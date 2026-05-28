@@ -7,6 +7,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.Getter;
 import pl.publicprojects.pcommon.protocol.handler.ExceptionHandler;
 import pl.publicprojects.pcommon.protocol.handler.decoder.PacketDecoder;
@@ -14,6 +15,7 @@ import pl.publicprojects.pcommon.protocol.handler.decoder.SizeDecoder;
 import pl.publicprojects.pcommon.protocol.handler.encoder.PacketEncoder;
 import pl.publicprojects.pcommon.protocol.handler.encoder.SizeEncoder;
 import pl.publicprojects.pcommon.protocol.packet.PacketUtil;
+import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.PingPacket;
 import pl.publicprojects.pnettyserver.handler.AbstractHandler;
 import pl.publicprojects.pnettyserver.session.Session;
 
@@ -21,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 
@@ -35,6 +40,7 @@ public class NettyServer {
     private final List<AbstractHandler> handlerList = new CopyOnWriteArrayList<>();
     private final int port;
     private final Logger pluginLogger;
+    private ScheduledExecutorService pingScheduler;
 
     /**
      * @param port Port for server bind
@@ -69,6 +75,7 @@ public class NettyServer {
                                     .addLast(new PacketDecoder(packetUtil, session))
                                     .addLast(new SizeEncoder())
                                     .addLast(new PacketEncoder())
+                                    .addLast(new IdleStateHandler(60, 60, 0, TimeUnit.SECONDS))
                                     .addLast(new ExceptionHandler(session));
                         }
                     })
@@ -80,6 +87,17 @@ public class NettyServer {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        this.pingScheduler = Executors.newScheduledThreadPool(1);
+        this.pingScheduler.scheduleAtFixedRate(() -> {
+            for(Session session : Session.getSessionList()) {
+                session.sendPacket(new PingPacket(System.currentTimeMillis()));
+            }
+        }, 0, 30, TimeUnit.SECONDS);
+    }
+
+    public void shutdown() {
+        this.started = false;
+        this.pingScheduler.close();
     }
 
     public void registerHandler(AbstractHandler handler) {
