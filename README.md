@@ -69,6 +69,7 @@ Returns:
 WebSocket is available at ``/ws`` endpoint. While there is a connection between WebSocket client and WebSocket server, the server will send new chat messages in real time.
 # Potential problems.
 There is no implemented validation for which message is already received by frontend, so while connection starts, when web browser will receives ``GET`` response (20 messages) and someone will send message at the same time, that message may not be received or duplicated.
+
 As ``AsyncChatEvent`` is asynchronous, ``ChatQueue`` may potentially throw ``ConcurrentModificationException``
 These issues have not been verified yet.
 
