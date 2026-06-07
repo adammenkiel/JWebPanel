@@ -2,6 +2,7 @@
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) ![Last Commit](https://img.shields.io/github/last-commit/adammenkiel/AEP?style=for-the-badge) ![Activity](https://img.shields.io/github/commit-activity/m/adammenkiel/AEP?style=for-the-badge)
 # Table of Contents
 - [Project description](#project-description)
+- [Screenshots](#screenshots)
 - [RestAPI documentation](#restapi-documentation)
   - [POST /api/auth/login](#post-apiauthlogin)
   - [POST /api/auth/register](#post-apiauthregister)
@@ -26,6 +27,11 @@ This is a full-stack web panel for players with a backend implemented in ``Java`
 - The ability to pin player to specific panel account.
 - Access for players to manage their own accounts and get information about their own accounts and broadcasts.
 - Access for manage other accounts for administrators etc.
+
+# Screenshots
+
+<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/de48d5cc-1cc2-4470-8004-9f1a37420586" />
+<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/5a9df09b-7cb9-4034-a5b5-238192358fd2" />
 
 
 # RestAPI documentation
