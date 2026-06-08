@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * ORM for roles table
+ */
 @Entity
 @Table(name = "roles")
 @Getter

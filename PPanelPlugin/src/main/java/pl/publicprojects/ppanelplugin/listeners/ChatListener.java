@@ -1,11 +1,11 @@
-package pl.publicprojects.panelplugin.listeners;
+package pl.publicprojects.ppanelplugin.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import pl.publicprojects.panelplugin.basic.PPanelPlugin;
+import pl.publicprojects.ppanelplugin.basic.PPanelPlugin;
 import pl.publicprojects.pcommon.app.helper.ChatQueue;
 import pl.publicprojects.pcommon.protocol.packet.packets.clientbound.MessagePacket;
 import pl.publicprojects.pnettyserver.session.Session;

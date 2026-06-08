@@ -37,13 +37,14 @@ public class Session extends AbstractConnection {
     }
 
     @Override
-    public void disconnect() {
+    public synchronized void disconnect() {
         sessionList.remove(this);
         this.channel.disconnect();
+        this.nettyServer.getPluginLogger().log(Level.INFO, "Session ended.");
     }
 
     @Override
-    public void disconnectWithCause(Throwable throwable) {
+    public synchronized void disconnectWithCause(Throwable throwable) {
         if(this.channel.isActive()) {
             this.sendPacket(new DisconnectPacket(throwable.getMessage()));
         }
@@ -68,7 +69,7 @@ public class Session extends AbstractConnection {
     }
 
     @Override
-    public void disconnectWithReason(String reason) {
+    public synchronized void disconnectWithReason(String reason) {
         if(this.channel.isActive())
             this.sendPacket(new DisconnectPacket("Disconnected: " + reason));
         this.disconnect();

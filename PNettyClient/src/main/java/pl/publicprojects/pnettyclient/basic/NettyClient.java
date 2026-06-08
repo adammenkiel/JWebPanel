@@ -77,8 +77,8 @@ public class NettyClient extends AbstractConnection {
                                     .addLast(new PacketDecoder(packetUtil, client))
                                     .addLast(new SizeEncoder())
                                     .addLast(new PacketEncoder())
-                                    .addLast(new ExceptionHandler(client))
-                                    .addLast(new IdleStateHandler(60, 60, 0, TimeUnit.SECONDS));
+                                    .addLast(new IdleStateHandler(60, 60, 0, TimeUnit.SECONDS))
+                                    .addLast(new ExceptionHandler(client));
                         }
                     });
 

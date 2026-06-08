@@ -1,11 +1,11 @@
-package pl.publicprojects.panelplugin.basic;
+package pl.publicprojects.ppanelplugin.basic;
 
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.publicprojects.panelplugin.handler.SimpleSessionHandler;
+import pl.publicprojects.ppanelplugin.handler.SimpleSessionHandler;
 import pl.publicprojects.pcommon.app.helper.ChatQueue;
-import pl.publicprojects.panelplugin.listeners.ChatListener;
+import pl.publicprojects.ppanelplugin.listeners.ChatListener;
 import pl.publicprojects.pnettyserver.basic.NettyServer;
 
 @Getter
