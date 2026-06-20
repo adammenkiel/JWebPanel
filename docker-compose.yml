@@ -28,5 +28,7 @@ services:
         environment:
             JWT_KEY_PUBLICPROJECT: [TOKEN HERE]
             spring.datasource.url: jdbc:postgresql://db:5432/mydb
+            public-projects.web-panel.plugin-host: mc_server
+            public-projects.web-panel.plugin-port: 9876
 volumes:
     pgdata:
