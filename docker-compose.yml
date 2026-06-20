@@ -1,0 +1,24 @@
+services:
+    db:
+        image: postgres:18
+        container_name: panel_db
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: mydb
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql
+    panel:
+        build: ./PWebsitePanel
+        container_name: panel
+        ports:
+            - "8080:8080"
+        depends_on:
+            - db
+        environment:
+            JWT_KEY_PUBLICPROJECT: [TOKEN HERE]
+            spring.datasource.url: jdbc:postgresql://db:5432/mydb
+volumes:
+    pgdata:
