@@ -14,6 +14,6 @@ COPY start.sh start.sh
 COPY build/libs/PPanelPlugin-1.0.0.jar plugins/PPanelPlugin.jar
 RUN chmod +x start.sh
 
-EXPOSE 25565
+EXPOSE 25565 9876
 
 CMD ["./start.sh"]
