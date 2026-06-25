@@ -128,5 +128,6 @@ These modules were tested on ``Windows 11`` and Minecraft server engine: ``Paper
 # Licence
 Project is based on MIT Licence. Licence could be found in ``LICENCE.md`` file.
 # Contact
-Email: akmenkiel@gmail.com
+- Email 1: akmenkiel@gmail.com
+- Email 2: publicprojectsmenkiel@gmail.com
 
