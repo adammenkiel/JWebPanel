@@ -1,4 +1,4 @@
-package pl.publicprojects.test.tests;
+package pl.publicprojects.test.tests.pwebsiteserver;
 
 import org.junit.jupiter.api.Test;
 import pl.publicprojects.pnettyserver.session.Session;
