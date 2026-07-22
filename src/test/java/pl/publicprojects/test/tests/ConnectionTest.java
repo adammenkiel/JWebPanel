@@ -17,28 +17,38 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConnectionTest {
 
-    @Test
-    public void connectionTest() throws IOException {
-        NettyServerManager.runJustOneTime();
+    private final Logger logger = Logger.getLogger("TEST_LOGGER");
 
-        Logger logger = Logger.getLogger("TEST_LOGGER");
-
-        logger.info("Trying to connect...");
-
+    public void sendHandshake(DataOutputStream output) throws IOException {
+        output.writeInt(4); // len
+        output.writeInt(0); // handshake packet id
+    }
+    public Socket createConnection() throws IOException, InterruptedException {
+        this.logger.info("Trying to connect...");
         Socket s = new Socket("localhost", 9876);
         DataOutputStream stream = new DataOutputStream(s.getOutputStream());
-
         //Handshake packet sending...:
-        logger.info("Sending handshake...");
-        stream.writeInt(4); // len
-        stream.writeInt(0); // handshake Id
-        logger.info("Handshake sent!");
+        this.logger.info("Sending handshake...");
+        this.sendHandshake(stream);
+        this.logger.info("Handshake sent!");
+        this.logger.info("Waiting 1s ...");
+        Thread.sleep(1000); // to correct
+        return s;
+    }
 
-        logger.info("Waiting 1s ...");
-        try { Thread.sleep(1000); } catch (Exception ignored) {} // Time for receive packet
+    @Test
+    public void connectionTest() throws IOException, InterruptedException {
+        //Arrange
+        NettyServerManager.runJustOneTime();
+        Socket s = createConnection();
+
+        //Act
         List<Session> sessionList = Session.getSessionList();
-        logger.info("Clients online: " + sessionList.size());
-        assertFalse(Session.getSessionList().isEmpty());
+
+        //Assert
+        assertFalse(sessionList.isEmpty());
+
+        //After
         s.close();
     }
 }
