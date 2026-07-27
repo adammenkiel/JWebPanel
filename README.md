@@ -1,5 +1,5 @@
 # JWebPanel
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) ![Last Commit](https://img.shields.io/github/last-commit/adammenkiel/AEP?style=for-the-badge) ![Activity](https://img.shields.io/github/commit-activity/m/adammenkiel/AEP?style=for-the-badge)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) ![Last Commit](https://img.shields.io/github/last-commit/adammenkiel/JWebPanel?style=for-the-badge) ![Activity](https://img.shields.io/github/commit-activity/m/adammenkiel/JWebPanel?style=for-the-badge)
 # Table of Contents
 - [Project description](#project-description)
 - [Screenshots](#screenshots)
